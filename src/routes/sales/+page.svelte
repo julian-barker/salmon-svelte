@@ -1,5 +1,6 @@
 <script>
-
+// import ShopLocations from './functions.svelte'
+import Data from "./data.svelte";
 </script>
 <section>
   <h1>SSC Sales Data</h1>
