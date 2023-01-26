@@ -1,11 +1,11 @@
-function ShopLocations(location, minHrCust, maxHrCust, averageCookiesPerCust) {
-  this.location = location;
-  this.minHrCust = minHrCust;
-  this.maxHrCust = maxHrCust;
-  this.averageCookiesPerCust = averageCookiesPerCust;
-  this.hrlyTotal = [];
-  this.dailyTotal = 0;
-  this.customersPerHr = [];
+export const ShopLocations = (location, minHrCust, maxHrCust, averageCookiesPerCust) => {
+  location = location;
+  minHrCust = minHrCust;
+  maxHrCust = maxHrCust;
+  averageCookiesPerCust = averageCookiesPerCust;
+  hrlyTotal = [];
+  dailyTotal = 0;
+  customersPerHr = [];
   allCookieCafes.push(this);
 }
 
@@ -15,22 +15,21 @@ new ShopLocations("Dubai", 11, 38, 3.7);
 new ShopLocations("Paris", 20, 38, 2.3);
 new ShopLocations("Lima", 2, 16, 4.6);
 
-ShopLocations.prototype.custPerHour = function () {
+export const ShopLocations.custPerHour = () => {
   for (let i = 0; i < hours.length; i++) {
-    this.customersPerHr.push(
+    customersPerHr.push(
       Math.floor(
-        Math.random() * (this.maxHrCust - this.minHrCust + 1) + this.minHrCust
+        Math.random() * (maxHrCust - minHrCust + 1) + minHrCust
       )
     );
   }
 };
 
-ShopLocations.prototype.totalPerHr = function () {
-  for (let i = 0; i < this.customersPerHr.length; i++) {
-    this.hrlyTotal[i] = Math.round(
-      this.customersPerHr[i] * this.averageCookiesPerCust
+export const ShopLocations.totalPerHr = () => {
+  for (let i = 0; i < customersPerHr.length; i++) {
+    hrlyTotal[i] = Math.round(
+      customersPerHr[i] * averageCookiesPerCust
     );
-    this.dailyTotal += this.hrlyTotal[i];
-
+    dailyTotal += hrlyTotal[i];
   }
 };
