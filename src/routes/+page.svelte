@@ -8,6 +8,7 @@
 	import frosted_cookie from '$lib/images/frosted-cookie.jpg';
 	import shirt from '$lib/images/shirt.jpg';
 	import Carousel from 'svelte-carousel';
+	import { browser } from '$app/environment';
 
 	let carousel;
 </script>
@@ -25,17 +26,19 @@
 
 	<h2>Image Gallery</h2>
 	<div class="carousel">
-		<Carousel
-			bind:this={carousel}
-		>
-			<img src={chinook} alt="chinook">
-			<img src={cutter} alt="cutter">
-			<img src={family} alt="family">
-			<img src={fish} alt="fish">
-			<img src={frosted_cookie} alt="frosted-cookie">
-			<img src={salmon} alt="salmon">
-			<img src={shirt} alt="shirt">
-		</Carousel>
+		{#if browser}
+			<Carousel
+				bind:this={carousel}
+			>
+				<img src={chinook} alt="chinook">
+				<img src={cutter} alt="cutter">
+				<img src={family} alt="family">
+				<img src={fish} alt="fish">
+				<img src={frosted_cookie} alt="frosted-cookie">
+				<img src={salmon} alt="salmon">
+				<img src={shirt} alt="shirt">
+			</Carousel>
+  	{/if}
 	</div>
 
 </section>

@@ -96,6 +96,7 @@
 
   
   
+
   {#if showAddModal}
     <Modal on:close="{() => showAddModal = false}">
       <form class="content" on:submit={handleAddSubmit}>
