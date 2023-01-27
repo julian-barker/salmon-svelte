@@ -65,3 +65,15 @@ export const createShops = () => {
     dailyTotal,
   };
 };
+
+export const addShop = (name, min, max, avg, shops) => {
+  const newShop = new Shop(name, min, max, avg);
+  return [...shops, newShop];
+}
+
+// export const updateShop = (name, min, max, avg, shops) => {
+//   const newShop = new Shop(name, min, max, avg);
+//   const index = shops.find(shop => shop.name === name);
+//   shops.splice(index, 1, newShop);
+//   return shops;
+// }

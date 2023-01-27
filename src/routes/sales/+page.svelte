@@ -1,8 +1,29 @@
 <script>
   // import ShopLocations from './functions.svelte'
   // import Data from "./data.svelte";
-  import { createShops } from './createShops.js';
-  let { shops, totalHourlySales, totalHourlyStaff, hours } = createShops();
+  import { createShops, addShop } from './createShops.js';
+  import Modal from './modal.svelte';
+
+  let showAddModal = false;
+  // let showUpdateModal = false;
+  $: ({ shops, totalHourlySales, totalHourlyStaff, hours } = createShops());
+
+  // $: shop= {}
+  let shop = {
+    name: '',
+    min: 0,
+    max: 0,
+    avg: 0
+  };
+
+  function handleAddSubmit(e) {
+    e.preventDefault();
+    console.log(shop);
+    console.log('calling handleSubmit');
+    shops = addShop(shop.name, parseInt(shop.min), parseInt(shop.max), parseInt(shop.avg), shops);
+    showAddModal = false;
+  }
+
 </script>
 
 <section>
@@ -12,7 +33,7 @@
       <h3>Sales Table</h3>
       <table id="sales-table">
         <thead>
-          <th>Store</th>
+          <th>Shop</th>
           {#each hours as hour}
             <th>{hour}</th>
           {/each}
@@ -41,7 +62,7 @@
       <table id="staff-table">
         <thead>
           <tr>
-            <th>Store</th>
+            <th>Shop</th>
             {#each hours as hour}
               <th>{hour}</th>
             {/each}
@@ -64,39 +85,74 @@
       </table>
     </div>
     <div class="table-container" id="params-container">
-      <h3>Store Parameters</h3>
+      <!-- <h3>Shop Parameters</h3>
       <div id="stats-body"></div>
-      <button id="choose-store">Update Store Parameters</button>
-      <button id="add-store">New Store Location</button>
+      <button id="choose-shop">Update Shop Parameters</button> -->
+      <button on:click="{() => showAddModal = true}">
+        Add New Shop
+      </button>
     </div>
   </div>
+
+  
+  
+  {#if showAddModal}
+    <Modal on:close="{() => showAddModal = false}">
+      <form class="content" on:submit={handleAddSubmit}>
+        <label for='shop-name'>Name</label>
+        <input name="shop-name" type="text" bind:value={shop.name} />
+        <label for='shop-min'>Min Sales</label>
+        <input name="shop-min" type="text" bind:value={shop.min} />
+        <label for='shop-max'>Max Sales</label>
+        <input name="shop-max" type="text" bind:value={shop.max} />
+        <label for='shop-avg'>Avg Sales</label>
+        <input name="shop-avg" type="text" bind:value={shop.avg} />
+        <button type="submit">Submit</button>
+      </form>
+    </Modal>
+  {/if}
+
+
 </section>
 
 <style>
-  table {
-  width: 100%;
-  padding: 16px;
-  background-color: var(--main-font-col);
-  color: var(--table-font-col) !important;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  h1 {
+    font-weight: bold;
+  }
+  
+  h1, h3 {
   text-align: center;
-}
+  color: coral;
+  }
 
-th, td {
-  width: 80px;
-  border: 1px solid hsl(0 0% 15%);;
-  border-collapse: collapse;
-  background-color: var(--main-bg-col);
-}
+  table {
+    width: 100%;
+    padding: 16px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+  }
 
-th {
-  margin-bottom: 20px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
+  th, td {
+    width: 80px;
+    border: 1px solid hsl(0 0% 15%);;
+    border-collapse: collapse;
+  }
 
-td {
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
+  th {
+    margin-bottom: 20px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background-color: bisque;
+  }
+
+  td {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background-color: cornsilk;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
 </style>
